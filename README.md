@@ -7,7 +7,7 @@ An automated Python script that parses Device IDs from an Excel spreadsheet and 
 <img width="290" height="290" alt="AR1211012006" src="https://github.com/user-attachments/assets/68148339-ca5a-4658-8d14-f864127ae7c3" />
 
 ## ⚙️ How it Works
-1. **Excel Data Extraction**: The script reads device identification strings (such as `AR1211012006`) directly from columns inside your spreadsheet (`test.xlsx` / `test2.xlsx`).
+1. **Excel Data Extraction**: The script reads device identification strings (such as `AR1211012006`) directly from columns inside your spreadsheet (`test.xlsx').
 2. **Dynamic Folder Tree Creation**: For every unique Device ID found, the script automatically establishes a dedicated subfolder within a master directory using the format:
    `QR Codes/` ➔ `[Device ID]/`
 3. **Isolated QR Export**: It encodes the identifier into a high-resolution QR matrix image and saves it directly inside that specific device's folder using the matching ID as the file name:
