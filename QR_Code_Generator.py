@@ -1,50 +1,51 @@
 import pandas as pd
 import qrcode
-import os 
-from docx import Document
-from docx.shared import Inches
-
+import os
+from PIL import ImageDraw, ImageFont
 
 def Qr_Report (excel_file, Column_name) : 
-    doc = Document()
-    doc.add_heading('QR Code Of Devices', level=1)
     data_file = pd.read_excel(excel_file)
 
     if Column_name not in data_file.columns:
         print(f"Error: column '{Column_name}' not in excel file ")
 
-    temp_image = "temp_qr.png"
-
     flag = 0
 
-    for val in data_file[Column_name]: 
+    if os.path.exists("QR Codes"):
+        pass
+    else:
+        os.mkdir("QR Codes")
+
+    os.chdir("QR Codes")
+    for val in data_file[Column_name]:
 
         device_id = str(val).strip()
         flag += 1
+        temp_image = f"{device_id}.png"
 
-        print(f"Generating Qr for Device {flag}: '{device_id}'")
+        if os.path.exists(f"{device_id}.png"):
+            print(f"Device already exists : {device_id}")
+            continue
+       
+        if os.path.exists(f"{device_id}"):
+            print(f" ! QR already generated of {device_id} ")
+            pass
 
-        qr = qrcode.QRCode(version=1, box_size=10, border=2)
-        qr.add_data(device_id)
-        qr.make(fit=True)
-        pic = qr.make_image(fill_color="black", back_color="white")
-        pic.save(temp_image)
+        else:
+            os.mkdir(f"{device_id}")
+            os.chdir(f"{device_id}")
+            print(f"Generating Qr for Device {flag}: '{device_id}'")
+            qr = qrcode.QRCode(version=1, box_size=10, border=4)
+            qr.add_data(device_id)
+            qr.make(fit=True)
+            pic = qr.make_image(fill_color="black", back_color="white").convert("RGB")
 
-        doc.add_heading(f" {flag} Device Id: {device_id} ", level=2)
-        doc.add_picture(temp_image, width=Inches(2.0))
-        doc.add_paragraph()
+            fianl_img = ImageDraw.Draw(pic)
 
-        output_document = "Device_QR_Codes.docx"
+            fianl_img.text((70, 260), device_id, fill="black", font=ImageFont.truetype("arial.ttf", 20))
+            pic.save(temp_image)
 
-    output_document = "Device_QR_Codes.docx"
-    doc.save(output_document)
+            os.chdir("C:\\Users\\sunsh\\Desktop\\Rushikesh\\python\\QR Codes")
 
-    if os.path.exists(temp_image):
-        os.remove(temp_image)
-        
-    print(f"\n File saved as '{output_document}'")
 
-if os.path.exists("Device_QR_Codes.docx"):
-    print("Error: file already exists !")
-else:
-    Qr_Report(excel_file='C:\\Users\\sunsh\\Desktop\\Rushikesh\\QR code\\test.xlsx', Column_name='Device ID')
+Qr_Report(excel_file='C:\\Users\\sunsh\\Desktop\\Rushikesh\\QR code\\test2.xlsx', Column_name='Device ID')
