@@ -3,6 +3,8 @@
 # Excel-to-Folder QR Code Generator 🚀
 
 An automated Python script that parses Device IDs from an Excel spreadsheet and dynamically organizes the generated QR code images into a clean, nested directory structure.
+## 🖼️ Generated Output Samples
+<img width="290" height="290" alt="AR1211012006" src="https://github.com/user-attachments/assets/68148339-ca5a-4658-8d14-f864127ae7c3" />
 
 ## ⚙️ How it Works
 1. **Excel Data Extraction**: The script reads device identification strings (such as `AR1211012006`) directly from columns inside your spreadsheet (`test.xlsx` / `test2.xlsx`).
